@@ -2,24 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const MyGearPage = () => {
-  const [gear, setGear] = useState({
-    name: '',
-    type: '',
-    purchaseDate: '',
-    usageFrequency: '',
-    usageLocation: '',
-  });
-
-  const handleInputChange = (e) => {
-    setGear({ ...gear, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post('/api/gear', gear)
-      .then((response) => console.log(response))
-      .catch((error) => console.error('Error adding gear:', error));
-  };
 
   return (
     <form onSubmit={handleSubmit}>
