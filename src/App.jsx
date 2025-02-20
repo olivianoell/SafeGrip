@@ -1,13 +1,9 @@
-// import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css';
-import HomePage from './pages/HomePage/HomePage';
-// import LoginPage from './pages/LoginPage/LoginPage';
-import MyGearPage from './pages/MyGearPage/MyGearPage';
+import './App.scss';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-
-const baseURL = import.meta.env.VITE_API_URL;
+import HomePage from './pages/HomePage/HomePage';
+import MyGearPage from './pages/MyGearPage/MyGearPage';
 
 function App() {
 
@@ -17,9 +13,14 @@ function App() {
         <Header />
         <main>
           <Routes>
-          <Route exact path="/" component={HomePage} />
-          {/* <Route path="/login" component={LoginPage} /> */}
-          <Route path="/mygear" component={MyGearPage} />
+            <Route 
+              path="/" 
+              element={<HomePage />} 
+            />
+            <Route 
+              path="/mygear"
+              element={<MyGearPage />} 
+            />
           </Routes>
         </main>
         <Footer />
