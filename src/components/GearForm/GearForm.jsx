@@ -1,100 +1,121 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 const GearForm = () => {
+  const [gearData, setGearData] = useState([]);
+  const [selectedGear, setSelectedGear] = useState('');
+  const [purchaseDate, setPurchaseDate] = useState('');
+  const [frequency, setFrequency] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [purchaseLink, setPurchaseLink] = useState('');
+  const [error, setError] = useState('');
 
-    const [gear, setGear] = useState('');
-    const [purchaseDate, setPurchaseDate] = useState('');
-    const [usageFrequency, setUsageFrequency] = useState('');
-    const [expiryDate, setExpiryDate] = useState('');
-    const [purchaseLink, setPurchaseLink] = useState('');
+  const apiUrl = import.meta.env.VITE_APP_URL;  
+
+  useEffect(() => {
+    axios.get(`${apiUrl}/gear`)
+      .then(response => {
+        setGearData(response.data);
+      })
+      .catch(err => {
+        setError('Error fetching gear data');
+      });
+  }, [apiUrl]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     
-    const fetchData = async () => {
-        try {
-          const response = await axios.get(`${API_URL}/gear`);
-          setGear(response.data);
-        } catch (err) {
-          console.error("Error fetching gear:", err);
-        }
-    };
-        useEffect(() => {
-            fetchData();
-        }, []);
+    if (!selectedGear || !purchaseDate || !frequency) {
+      setError('Please fill in all the fields.');
+      return;
+    }
 
-    const gearOptions = [
-        "Harness", 
-        "Rope", 
-        "Nylon-Sling", 
-    ];
+    try {
+      const response = await axios.post(`${apiUrl}/gear/${selectedGear}/expiry_date`, {
+        purchase_date: purchaseDate,
+        usage_frequency: frequency,
+      });
 
-    const usageFrequencyOptions = [
-        "Unused and correctly stored", 
-        "Used once or twice a year", 
-        "Used once a month", 
-        "Used several times a month", 
-        "Used every week", 
-        "Used almost daily"
-    ];
+      const calculatedExpiryDate = response.data.expiry_date;
 
-    const handleSubmit = async () => {
-        try {
-            const response = await axios.post(`${API_URL}/myGear`, {
-                gear: gear,
-                purchase_date: purchaseDate,
-                usage_frequency: usageFrequency,
-                expiry_date: expiryDate,
-                purchase_link: purchaseDate
-            });
+      const expiryDateObj = new Date(calculatedExpiryDate);
+      const currentDate = new Date();
+      const diffInTime = expiryDateObj - currentDate;
+      const diffInDays = diffInTime / (1000 * 3600 * 24);
 
-            setExpiryDate(response.data.expiry_date);
-            setPurchaseLink(response.data.purchase_link);
+      if (diffInDays <= 365) {
+        const linkResponse = await axios.get(`${apiUrl}/gear/${selectedGear}/purchase_link`);
+        setPurchaseLink(linkResponse.data.purchase_link);
+      }
 
-        } catch (error) {
-            console.error('Error submitting form:', error);
-        }
-    };
+      setExpiryDate(calculatedExpiryDate);
+      setError(''); 
+    } catch (err) {
+      setError('Error calculating expiry date');
+    }
+  };
 
-    return (
-        <section>
-            <div>
-                <label>Gear:</label>
-                <select value={gear} onChange={(e) => setGear(e.target.value)}>
-                    <option value="">Select Gear</option>
-                    {gearOptions.map((option) => (
-                        <option key={option} value={option}>{option}</option>
-                    ))}
-                </select>
-            </div>
+  return (
+    <div>
+      <h2>Gear Expiry Date Form</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="gear">Gear:</label>
+          <select 
+            id="gear" 
+            value={selectedGear} 
+            onChange={(e) => setSelectedGear(e.target.value)} 
+          >
+            <option value="">Select Gear</option>
+            {gearData.map((gear) => (
+              <option key={gear.gear} value={gear.gear}>
+                {gear.gear}
+              </option>
+            ))}
+          </select>
+        </div>
 
-            <div>
-                <label>Purchase Date:</label>
+        <div>
+          <label htmlFor="purchase_date">Purchase Date:</label>
+          <input 
+            type="date" 
+            id="purchase_date" 
+            value={purchaseDate} 
+            onChange={(e) => setPurchaseDate(e.target.value)} 
+          />
+        </div>
+
+        <div>
+          <label>Usage Frequency:</label>
+          <div>
+            {Object.keys(gearData.find((gear) => gear.gear === selectedGear)?.usage_frequency || {}).map((key) => (
+              <div key={key}>
                 <input 
-                    type="date" 
-                    value={purchaseDate} 
-                    onChange={(e) => setPurchaseDate(e.target.value)} 
+                  type="radio" 
+                  id={key} 
+                  name="frequency" 
+                  value={key}
+                  onChange={(e) => setFrequency(e.target.value)} 
                 />
-            </div>
+                <label htmlFor={key}>{key}</label>
+              </div>
+            ))}
+          </div>
+        </div>
 
-            <div>
-                <label>Usage Frequency:</label>
-                <select value={usageFrequency} onChange={(e) => setUsageFrequency(e.target.value)}>
-                    <option value="">Select Frequency</option>
-                    {usageFrequencyOptions.map((option) => (
-                        <option key={option} value={option}>{option}</option>
-                    ))}
-                </select>
-            </div>
+        <button type="submit">Submit</button>
+      </form>
 
-            <button onClick={handleSubmit}>Submit</button>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            <div>
-                <h2>Expiry Date: {expiryDate}</h2>
-                <h2>Purchase Link: <a href={purchaseLink}>{purchaseLink}</a></h2>
-            </div>
-        </section>
-    );
+      {expiryDate && (
+        <div>
+          <h3>Calculated Expiry Date: {expiryDate}</h3>
+          {purchaseLink && <p>Purchase Link: <a href={purchaseLink} target="_blank" rel="noopener noreferrer">Click here</a></p>}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default GearForm;
