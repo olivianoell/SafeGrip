@@ -1,32 +1,27 @@
 @font-face {
-    font-family: "Newsreader";
-    font-weight: 300;
-    src: url(../../assets/fonts/Newsreader-Light.woff) format("woff"), url(../../assets/fonts/Alternative/Newsreader-Light.woff2) format("woff2");
+    font-family: "Quicksand";
+    font-weight: 700;
+    src: url(../../assets/fonts/Quicksand-Bold.ttf) format("ttf");
 }
 
 @font-face {
-    font-family: "Newsreader";
-    font-weight: 300;
-    font-style: italic;
-    src: url(../../assets/fonts/Newsreader-LightItalic.woff) format("woff"), url(../../assets/fonts/Alternative/Newsreader-LightItalic.woff2) format("woff2");
-}
-
-@font-face{
-    font-family: "Newsreader";
-    font-weight: 500;
-    src: url(../../assets/fonts/Newsreader-Regular.woff) format("woff"), url(../../assets/fonts/Alternative/Newsreader-Regular.woff2) format("woff2");
-}
-   
-@font-face{
-    font-family: "Outfit";
-    font-weight: 300;
-    src: url(../../assets/fonts/Outfit-Light.woff) format("woff"), url(../../assets/fonts/Alternative/Outfit-Light.woff2) format("woff2");
+    font-family: "Quicksand";
+    font-weight: 200;
+    src: url(../../assets/fonts/Quicksand-Light.ttf) format("ttf");
 }
 
 @font-face {
-    font-family: "Outfit";
+    font-family: "Quicksand";
     font-weight: 500;
-    src: url(../../assets/fonts/Outfit-Medium.woff) format("woff"), url(../../assets/fonts/Outfit-Medium.woff);
+    src: url(../../assets/fonts/Quicksand-Medium.ttf) format("ttf");
 }
-
-
+@font-face {
+    font-family: "Quicksand";
+    font-weight: 300;
+    src: url(../../assets/fonts/Quicksand-Regular.ttf) format("ttf");
+}
+@font-face {
+    font-family: "Quicksand";
+    font-weight: 600;
+    src: url(../../assets/fonts/Quicksand-SemiBold.ttf) format("ttf");
+}
