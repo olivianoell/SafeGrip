@@ -9,7 +9,7 @@ function Header() {
             <nav className="header__navbar">
                 <ul className="header__navbar-list">
                     <li className="header__navbar-list-item">
-                        <Link to={"/"}>Home</Link>
+                        <Link to={"/"}>Form</Link>
                     </li>
                     <li className="header__navbar-list-item">
                         <Link to={"/mygear"}>My Gear</Link>

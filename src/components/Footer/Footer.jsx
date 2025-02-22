@@ -1,11 +1,10 @@
 import "./Footer.scss";
+import FooterImg from "../../assets/images/footer.jpg";
 
 function Footer() {
   return (
     <footer className="footer">
-      <p className="footer__line">
-        SafeGrip
-      </p>
+      <img className="footer__img" src={FooterImg} alt="footer"/>
     </footer>
   );
 }
