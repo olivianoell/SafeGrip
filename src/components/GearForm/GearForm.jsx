@@ -10,7 +10,7 @@ const GearForm = () => {
   const [purchaseLink, setPurchaseLink] = useState('');
   const [error, setError] = useState('');
 
-  const apiUrl = import.meta.env.VITE_APP_URL;  
+  const apiUrl = import.meta.env.VITE_APP_URL;
 
   useEffect(() => {
     axios.get(`${apiUrl}/gear`)
@@ -49,7 +49,8 @@ const GearForm = () => {
       }
 
       setExpiryDate(calculatedExpiryDate);
-      setError(''); 
+      setError('');
+
     } catch (err) {
       setError('Error calculating expiry date');
     }
@@ -119,3 +120,4 @@ const GearForm = () => {
 };
 
 export default GearForm;
+
