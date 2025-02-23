@@ -1,0 +1,16 @@
+@use "../../styles/_partials/global" as *;
+@use "../../styles/_partials/mixins" as *;
+@use "../../styles/_partials/typography" as *;
+@use "../../styles/_partials/variables" as *;
+
+a{
+    color: $black;
+}
+
+.hero{
+    &__img{
+        width: 100%;
+    }
+
+}
+
