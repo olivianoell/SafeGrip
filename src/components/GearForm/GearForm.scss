@@ -1,0 +1,33 @@
+@use "../../styles/_partials/global" as *;
+@use "../../styles/_partials/mixins" as *;
+@use "../../styles/_partials/typography" as *;
+@use "../../styles/_partials/variables" as *;
+
+.container{
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.form{
+    padding: 2rem;
+    border: 1px solid $grey;
+    border-radius: 0.5rem;
+    text-align: left;
+
+    &__item{
+        padding-bottom: 0.5rem;
+    }
+
+    &__button-div{
+        text-align: center;
+    }
+
+    &__button{
+        cursor: pointer;
+
+        &:hover {
+            background-color: $black;
+            color: $white;
+          }
+    }
+}

@@ -3,8 +3,14 @@
 @use "../../styles/_partials/typography" as *;
 @use "../../styles/_partials/variables" as *;
 
-.footer{
+a{
+    color: $black;
+}
+
+.hero{
     &__img{
         width: 100%;
     }
+
 }
+

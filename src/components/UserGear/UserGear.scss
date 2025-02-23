@@ -1,0 +1,41 @@
+@use "../../styles/_partials/global" as *;
+@use "../../styles/_partials/mixins" as *;
+@use "../../styles/_partials/typography" as *;
+@use "../../styles/_partials/variables" as *;
+
+.container{
+    text-align: center;
+    padding: 0.5rem;
+
+    &__ul{
+        list-style: none;
+        text-align: left;
+    }
+
+    &__card{
+        border: 1px solid $grey;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        padding-top: 0;
+        margin-right: 2rem;
+    }
+
+    &__gear{
+        text-align: center;
+        text-decoration: underline;
+    }
+
+    &__button-div{
+        text-align: center;
+    }
+
+    &__button{
+        cursor: pointer;
+
+        &:hover {
+            background-color: $black;
+            color: $white;
+          }
+    }
+}
