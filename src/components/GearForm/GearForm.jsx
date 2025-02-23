@@ -52,6 +52,19 @@ const GearForm = () => {
       setExpiryDate(calculatedExpiryDate);
       setError('');
 
+      const userData = {
+        gear: selectedGear,
+        purchase_date: purchaseDate,
+        usage_frequency: frequency,
+        expiry_date: calculatedExpiryDate,
+        purchase_link: purchaseLink,  
+      };
+  
+      await axios.post(`${apiUrl}/user/submit`, userData);
+  
+      alert("Your data has been saved successfully!");
+  
+
     } catch (err) {
       setError('Error calculating expiry date');
     }
@@ -63,7 +76,7 @@ const GearForm = () => {
       <div className="form">
         <form onSubmit={handleSubmit}>
           <div className="form__item">
-            <label htmlFor="gear">Gear: </label>
+            <label className="form__label" htmlFor="gear">Gear: </label>
             <select 
               id="gear" 
               value={selectedGear} 
@@ -79,7 +92,7 @@ const GearForm = () => {
           </div>
 
           <div className="form__item">
-            <label htmlFor="purchase_date">Purchase Date: </label>
+            <label className="form__label" htmlFor="purchase_date">Purchase Date: </label>
             <input 
               type="date" 
               id="purchase_date" 
@@ -89,7 +102,7 @@ const GearForm = () => {
           </div>
 
           <div className="form__item">
-            <label>Usage Frequency:</label>
+            <label className="form__label">Usage Frequency:</label>
             <div>
               {Object.keys(gearData.find((gear) => gear.gear === selectedGear)?.usage_frequency || {}).map((key) => (
                 <div key={key}>
